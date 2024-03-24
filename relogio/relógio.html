@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relógio Mundial Interativo</title>
+    <style>
+        /* Estilos para o fundo preto */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: #000000;
+            color: #00FF00;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Estilos para o relógio */
+        .world-clock {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .timezone {
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            text-align: center;
+            width: 200px;
+        }
+
+        .clock {
+            width: 120px;
+            height: 120px;
+            border: 2px solid #333;
+            border-radius: 50%;
+            margin: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background-color: black;
+        }
+
+        .time-box {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        #local, #date, #time {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        #time {
+            font-size: 24px;
+            color: #00FF00;
+        }
+    </style>
+</head>
+<body>
+    <div class="world-clock">
+        <div class="timezone">
+            <div id="brasil">Brasil</div>
+            <div id="date-brasil"></div>
+            <div class="clock" id="clock-brasil">
+                <div class="time-box">
+                    <div id="time-brasil"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="timezone">
+            <div id="amsterda">Amsterdã</div>
+            <div id="date-amsterda"></div>
+            <div class="clock" id="clock-amsterda">
+                <div class="time-box">
+                    <div id="time-amsterda"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="timezone">
+            <div id="moskow">Moscow</div>
+            <div id="date-moskow"></div>
+            <div class="clock" id="clock-moskow">
+                <div class="time-box">
+                    <div id="time-moskow"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="timezone">
+            <div id="berlim">Berlim</div>
+            <div id="date-berlim"></div>
+            <div class="clock" id="clock-berlim">
+                <div class="time-box">
+                    <div id="time-berlim"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="timezone">
+            <div id="washington">Washington, D.C.</div>
+            <div id="date-washington"></div>
+            <div class="clock" id="clock-washington">
+                <div class="time-box">
+                    <div id="time-washington"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Função para atualizar o relógio de acordo com o fuso horário
+        function updateClock(timezoneId, clockId, dateId, timeId) {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const localDate = now.toLocaleDateString('pt-BR', options);
+            const localTime = now.toLocaleTimeString('pt-BR', { timeZone: timezoneId });
+
+            document.getElementById(dateId).textContent = localDate;
+            document.getElementById(timeId).textContent = localTime;
+
+            // Atualizar o relógio a cada segundo
+            setInterval(() => {
+                const now = new Date();
+                const localTime = now.toLocaleTimeString('pt-BR', { timeZone: timezoneId });
+                document.getElementById(timeId).textContent = localTime;
+            }, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateClock('America/Sao_Paulo', 'clock-brasil', 'date-brasil', 'time-brasil');
+            updateClock('Europe/Amsterdam', 'clock-amsterda', 'date-amsterda', 'time-amsterda');
+            updateClock('Europe/Moscow', 'clock-moskow', 'date-moskow', 'time-moskow');
+            updateClock('Europe/Berlin', 'clock-berlim', 'date-berlim', 'time-berlim');
+            updateClock('America/New_York', 'clock-washington', 'date-washington', 'time-washington');
+        });
+    </script>
+</body>
+</html>
